@@ -1,0 +1,16 @@
+{
+  "version": "0.0.1",
+  "authors": [
+    "@pitakill"
+  ],
+  "keywords": [
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {}
+}
