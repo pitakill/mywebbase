@@ -1,9 +1,6 @@
 {
   "version": "0.0.1",
   "main": "gulpfile.js",
-  "dependencies": {
-    "gulp": "^3.8.11"
-  },
   "devDependencies": {
     "connect-history-api-fallback": "0.0.5",
     "gulp": "^3.8.11",
