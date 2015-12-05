@@ -9,7 +9,9 @@ If you clone this, remember, i have a .gitignore_global file, so maybe you need 
 npm init
 bower init
 
-npm install --save-dev gulp gulp-clean gulp-connect gulp-copy gulp-jade gulp-stylus nib
+npm install --save-dev gulp gulp-clean gulp-connect gulp-copy gulp-jade gulp-sass gulp-stylus nib
 bower install --save angular-route angular-animate jquery
+
+In gulpfile.js you have to choise 'sass' or 'stylus'
 
 Cheers.

@@ -2,12 +2,16 @@ var gulp = require('gulp'),
     clean = require('gulp-clean'),
     connect = require('gulp-connect'),
     copy = require('gulp-copy'),
+    sass = require('gulp-sass'),
     stylus = require('gulp-stylus'),
     nib = require('nib'),
     jade = require('gulp-jade');
 //Gulp Tasks config
+
+var cssPreprocessor = 'sass';
+
 gulp.task('clean-assets', function(){
-  gulp.src('./img/*', {read:false})
+  gulp.src('./img/**/*', {read:false})
     .pipe(clean());
 });
 gulp.task('copy-assets', function() {
@@ -15,14 +19,19 @@ gulp.task('copy-assets', function() {
     .pipe(gulp.dest('./img/'))
     .pipe(connect.reload());
 });
-gulp.task('css', function(){
-  gulp.src('./app/styles/*.styl')
+gulp.task('sass', function () {
+  gulp.src('./app/styles/sass/**/*.scss')
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest('./dist/css'));
+});
+gulp.task('stylus', function(){
+  gulp.src('./app/styles/stylus/**/*.styl')
     .pipe(stylus({ use: nib(), compress:true }))
     .pipe(gulp.dest('./dist/css/'))
     .pipe(connect.reload());
 });
 gulp.task('html', function(){
-  gulp.src('./app/*.jade')
+  gulp.src('./app/**/*.jade')
     .pipe(jade({
       pretty: false
     }))
@@ -30,7 +39,7 @@ gulp.task('html', function(){
     .pipe(connect.reload());
 });
 gulp.task('js', function() {
-  gulp.src('./app/js/*.js')
+  gulp.src('./app/js/**/*.js')
     .pipe(gulp.dest('./dist/js/'))
     .pipe(connect.reload())
 });
@@ -43,12 +52,13 @@ gulp.task('server', function(){
   });
 });
 gulp.task('watch', function(){
-  gulp.watch(['./app/*.jade'], ['html']);
-  gulp.watch(['./app/styles/*.styl'], ['css']);
-  gulp.watch(['./app/js/*.js'], ['js']);
+  gulp.watch(['./app/**/*.jade'], ['html']);
+  gulp.watch(['./app/styles/**/*.styl'], ['stylus']);
+  gulp.watch('./sass/**/*.scss', ['sass']);
+  gulp.watch(['./app/js/**/*.js'], ['js']);
   gulp.watch(['./assets/**/*'], ['assets']);
 });
 //Gulp tasks exec
 gulp.task('assets', ['clean-assets','copy-assets']);
 gulp.task('default', ['server','init','watch']);
-gulp.task('init', ['assets','css','js','html']);
+gulp.task('init', ['assets',cssPreprocessor,'js','html']);
